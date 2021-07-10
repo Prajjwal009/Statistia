@@ -15,6 +15,7 @@
 		18BD038C2699EF1B0083A98A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18BD038A2699EF1B0083A98A /* LaunchScreen.storyboard */; };
 		18BD03972699EF1C0083A98A /* StatistiaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BD03962699EF1C0083A98A /* StatistiaTests.swift */; };
 		18BD03A22699EF1C0083A98A /* StatistiaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BD03A12699EF1C0083A98A /* StatistiaUITests.swift */; };
+		18BD03B0269A385B0083A98A /* TaskSetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BD03AF269A385B0083A98A /* TaskSetter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		18BD039D2699EF1C0083A98A /* StatistiaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StatistiaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		18BD03A12699EF1C0083A98A /* StatistiaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatistiaUITests.swift; sourceTree = "<group>"; };
 		18BD03A32699EF1C0083A98A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		18BD03AF269A385B0083A98A /* TaskSetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskSetter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				18BD03812699EF160083A98A /* SceneDelegate.swift */,
 				18BD03832699EF160083A98A /* ContentView.swift */,
 				18BD03852699EF1B0083A98A /* Assets.xcassets */,
+				18BD03AF269A385B0083A98A /* TaskSetter.swift */,
 				18BD038A2699EF1B0083A98A /* LaunchScreen.storyboard */,
 				18BD038D2699EF1B0083A98A /* Info.plist */,
 				18BD03872699EF1B0083A98A /* Preview Content */,
@@ -268,6 +271,7 @@
 			files = (
 				18BD03802699EF160083A98A /* AppDelegate.swift in Sources */,
 				18BD03822699EF160083A98A /* SceneDelegate.swift in Sources */,
+				18BD03B0269A385B0083A98A /* TaskSetter.swift in Sources */,
 				18BD03842699EF160083A98A /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
