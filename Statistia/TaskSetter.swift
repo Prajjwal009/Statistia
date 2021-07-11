@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TaskSetter: View {
+    @State var taskTime : Double = 0.0
     @State var taskText : String = ""
     @State var taskInfoText : String = ""
     var body: some View {
@@ -36,8 +37,29 @@ struct TaskSetter: View {
                 .frame(height : 60)
                 .background(Color.gray.opacity(0.16))
                 .cornerRadius(15)
+                .shadow(radius: 50)
                 .padding(.top)
                 .padding(.horizontal,10)
+            
+            ZStack{
+                
+                Circle().stroke(Color.purple,lineWidth: 2)
+                    .frame(width : 150, height :150)
+                    .foregroundColor(.white)
+                    
+                Text("\(Int(taskTime))")
+                    .font(.system(size: 28))
+                    .fontWeight(.light)
+                
+            }
+            .padding(.top,30)
+                
+      
+            
+            
+            Slider(value: $taskTime, in : 0...500)
+                .padding()
+                .accentColor(.black.opacity(0.8))
             
            
               

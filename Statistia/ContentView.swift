@@ -62,7 +62,7 @@ struct MainView : View {
                         
                         
                     }
-                    .background(index == 0 ? Color.black : .clear)
+                    .background(index == 0 ? Color.black.opacity(0.9) : .clear)
                     .clipShape(Capsule())
                     
                     
@@ -83,15 +83,22 @@ struct MainView : View {
                         
                         
                     }
-                    .background(index == 1 ? Color.black : .clear)
+                    .background(index == 1 ? Color.black.opacity(0.9) : .clear)
                     .clipShape(Capsule())
                 }
                 .background(Color.gray.opacity(0.1))
                 .clipShape(Capsule())
-                .padding(.bottom)
+                .padding(.bottom,10)
+                
+                Rectangle()
+                    .frame(width : UIScreen.main.bounds.width - 50 ,height: 0.5)
+                    
                 ScrollView{
                 TabCardView(taskName: "Chapter 4", taskInfo: "dlf", taskTime: 90)
                 TabCardView(taskName: "Website", taskInfo: "dlf", taskTime: 90)
+                    
+                  
+                    
                 Spacer()
                 }
             }
@@ -133,7 +140,7 @@ struct TabCardView : View {
         .background(Color.gray.opacity(0.2))
         .cornerRadius(15)
         .padding(.horizontal)
-        .padding(.bottom)
+        .padding(.top)
         
         
        
