@@ -17,9 +17,11 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            
     }
 }
 struct MainView : View {
+    @State var showingSheetTask = false
     @State var index = 0
     var body: some View{
         ZStack {
@@ -30,9 +32,19 @@ struct MainView : View {
                         .font(.system(size: 35))
                         .padding()
                     Spacer()
+                    
+                    Button(action : {
+                        showingSheetTask.toggle()
+                        
+                    }){
                     Image(systemName: "plus")
                         .font(.system(size: 28))
+                        .foregroundColor(.black)
                         .padding()
+                    }
+                    .sheet(isPresented : $showingSheetTask){
+                        TaskSetter()
+                    }
                 }
                 .padding(.bottom,18)
                 
@@ -77,10 +89,11 @@ struct MainView : View {
                 .background(Color.gray.opacity(0.1))
                 .clipShape(Capsule())
                 .padding(.bottom)
-                
+                ScrollView{
                 TabCardView(taskName: "Chapter 4", taskInfo: "dlf", taskTime: 90)
                 TabCardView(taskName: "Website", taskInfo: "dlf", taskTime: 90)
                 Spacer()
+                }
             }
         }
     }
@@ -116,10 +129,12 @@ struct TabCardView : View {
                 .padding(.horizontal,30)
         }
         .frame(height : 120)
+        
         .background(Color.gray.opacity(0.2))
         .cornerRadius(15)
         .padding(.horizontal)
         .padding(.bottom)
+        
         
        
         
