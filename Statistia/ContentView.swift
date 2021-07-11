@@ -21,6 +21,7 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 struct MainView : View {
+    @State var color1 = Color("Color1")
     @State var showingSheetTask = false
     @State var index = 0
     var body: some View{
@@ -62,7 +63,7 @@ struct MainView : View {
                         
                         
                     }
-                    .background(index == 0 ? Color.black.opacity(0.9) : .clear)
+                    .background(index == 0 ? color1 : .clear)
                     .clipShape(Capsule())
                     
                     
@@ -83,7 +84,7 @@ struct MainView : View {
                         
                         
                     }
-                    .background(index == 1 ? Color.black.opacity(0.9) : .clear)
+                    .background(index == 1 ? color1 : .clear)
                     .clipShape(Capsule())
                 }
                 .background(Color.gray.opacity(0.1))
@@ -91,7 +92,8 @@ struct MainView : View {
                 .padding(.bottom,10)
                 
                 Rectangle()
-                    .frame(width : UIScreen.main.bounds.width - 50 ,height: 0.5)
+                    .foregroundColor(color1)
+                    .frame(width : UIScreen.main.bounds.width - 50 ,height: 2)
                     
                 ScrollView{
                 TabCardView(taskName: "Chapter 4", taskInfo: "dlf", taskTime: 90)
