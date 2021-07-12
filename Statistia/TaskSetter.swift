@@ -15,7 +15,7 @@ struct TaskSetter: View {
     @State var taskDate  = Date()
     @State var color1 = Color("Color1")
     var body: some View {
-        VStack(){
+        VStack{
             HStack(alignment: .bottom){
                 TextField("task",text: $taskText)
                     .padding(.horizontal)
