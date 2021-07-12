@@ -6,14 +6,19 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseFirestore
 
 struct TaskSetter: View {
+    var db = Firestore.firestore()
+    
     @Environment(\.presentationMode) var presentationMode
     @State var taskTime : Double = 0.0
     @State var taskText : String = ""
     @State var taskInfoText : String = ""
     @State var taskDate  = Date()
     @State var color1 = Color("Color1")
+    
     var body: some View {
         VStack{
             HStack(alignment: .bottom){
@@ -31,6 +36,7 @@ struct TaskSetter: View {
                     
                     
             }
+            
             Rectangle()
                 .frame(width : UIScreen.main.bounds.width - 10 ,height: 2)
             
@@ -98,6 +104,7 @@ struct TaskSetter: View {
             Spacer()
             Button(action : {
                 presentationMode.wrappedValue.dismiss()
+                SaveTask()
                 
                 
             }){
@@ -112,6 +119,17 @@ struct TaskSetter: View {
             }
                 
               
+        }
+    }
+    func SaveTask(){
+        db.collection("Tasks").addDocument(data: ["title" : taskText]){error in
+            if let error = error {
+                print(error)
+                
+            }else{
+                print("data is inserteed")
+            }
+            
         }
     }
 }
