@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct TaskSetter: View {
     @Environment(\.presentationMode) var presentationMode
     @State var taskTime : Double = 0.0
@@ -14,6 +15,7 @@ struct TaskSetter: View {
     @State var taskInfoText : String = ""
     @State var taskDate  = Date()
     @State var color1 = Color("Color1")
+   
     var body: some View {
         VStack(){
             HStack(alignment: .bottom){
@@ -68,7 +70,7 @@ struct TaskSetter: View {
                     Text("min")
                         .fontWeight(.light)
                 }
-                .padding(.top,18)
+                .padding(.top,15)
                 
             }
             .padding(.top,30)
@@ -89,6 +91,17 @@ struct TaskSetter: View {
             }
             .padding()
             .padding(.vertical,10)
+            
+            
+            HStack {
+                Text("Priority Code")
+                    .font(.system(size: 22))
+                    .fontWeight(.semibold)
+                    .padding(.horizontal)
+                    .padding(.vertical,10)
+                Spacer()
+            }
+            
             
             
                 
