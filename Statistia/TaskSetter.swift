@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseFirestore
 
 
 struct TaskSetter: View {
+    var db = Firestore.firestore()
     @Environment(\.presentationMode) var presentationMode
     @State var taskTime : Double = 0.0
     @State var taskText : String = ""
@@ -111,6 +114,7 @@ struct TaskSetter: View {
             Spacer()
             Button(action : {
                 presentationMode.wrappedValue.dismiss()
+                SaveTask()
                 
                 
             }){
@@ -127,7 +131,12 @@ struct TaskSetter: View {
               
         }
     }
+    func SaveTask(){
+        db.collection("Tasks").addDocument(data: ["Title" : taskText])
+        
+    }
 }
+
 
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
