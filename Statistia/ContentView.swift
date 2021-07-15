@@ -3,6 +3,9 @@
 //  Statistia
 //
 //  Created by Prajjwal on 10/07/21.
+
+//lol
+
 //
 
 import SwiftUI
@@ -17,10 +20,12 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(FirebaseTaskModel())
             
     }
 }
 struct MainView : View {
+    @StateObject  var firetaskmodel = FirebaseTaskModel()
     @State var color1 = Color("Color1")
     @State var showingSheetTask = false
     @State var index = 0
@@ -43,9 +48,7 @@ struct MainView : View {
                         .foregroundColor(.black)
                         .padding()
                     }
-                    .sheet(isPresented : $showingSheetTask){
-                        TaskSetter()
-                    }
+                    .fullScreenCover(isPresented : $showingSheetTask,content : TaskSetter.init)
                 }
                 .padding(.bottom,18)
                 
@@ -96,15 +99,26 @@ struct MainView : View {
                     .frame(width : UIScreen.main.bounds.width - 50 ,height: 2)
                     
                 ScrollView{
-                TabCardView(taskName: "Chapter 4", taskInfo: "dlf", taskTime: 90)
-                TabCardView(taskName: "Website", taskInfo: "dlf", taskTime: 90)
+                    ForEach(firetaskmodel.tasks){task in
+                        
+                        VStack{
+                            TabCardView(taskName: task.title, taskInfo: "lol", taskTime: Int(task.time))
+                        }
+                        
+                    }
                     
-                  
-                    
-                Spacer()
+//
                 }
+                .onAppear(){
+                    self.firetaskmodel.fetchData()
+               
             }
+        }.environmentObject(firetaskmodel)
+        
         }
+        
+       
+        
     }
 }
 

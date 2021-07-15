@@ -12,7 +12,11 @@ import FirebaseFirestore
 
 struct TaskSetter: View {
     var db = Firestore.firestore()
+//    @StateObject var firetaskmodel = FirebaseTaskModel()
     @Environment(\.presentationMode) var presentationMode
+    @State var showingFirstView = false
+   
+    @State var currentTaskData = TaskDetails(title: "", time: 0)
     @State var taskTime : Double = 0.0
     @State var taskText : String = ""
     @State var taskInfoText : String = ""
@@ -22,7 +26,7 @@ struct TaskSetter: View {
     var body: some View {
         VStack(){
             HStack(alignment: .bottom){
-                TextField("task",text: $taskText)
+                TextField("task",text: $currentTaskData.title)
                     .padding(.horizontal)
                     .padding(.top,20)
                     .frame(height : 80)
@@ -67,7 +71,7 @@ struct TaskSetter: View {
                     .foregroundColor(color1)
                     
                 VStack(alignment : .center){
-                    Text("\(Int(taskTime))")
+                    Text("\(Int(currentTaskData.time))")
                         .font(.system(size: 30))
                         .fontWeight(.bold)
                     Text("min")
@@ -81,7 +85,7 @@ struct TaskSetter: View {
       
             
             
-            Slider(value: $taskTime, in : 0...500)
+            Slider(value: $currentTaskData.time, in : 0.0...500.0)
                 .padding()
                 .accentColor(color1)
             HStack{
@@ -113,8 +117,10 @@ struct TaskSetter: View {
               
             Spacer()
             Button(action : {
-                presentationMode.wrappedValue.dismiss()
+                showingFirstView.toggle()
                 SaveTask()
+               
+                
                 
                 
             }){
@@ -127,12 +133,15 @@ struct TaskSetter: View {
                     .background(Color.gray.opacity(0.2))
                     .clipShape(Capsule())
             }
+            .fullScreenCover(isPresented: $showingFirstView, content: ContentView.init)
                 
               
         }
     }
     func SaveTask(){
-        db.collection("Tasks").addDocument(data: ["Title" : taskText])
+        db.collection("Tasks").addDocument(data: ["title" : currentTaskData.title,"time": Int(currentTaskData.time)])
+//     
+       
         
     }
 }
