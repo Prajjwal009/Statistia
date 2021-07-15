@@ -12,6 +12,7 @@ import FirebaseFirestore
 struct TaskDetails : Identifiable {
     var id  = UUID().uuidString
     var title : String
+    var info : String
     var time : Double
     
     
@@ -39,10 +40,11 @@ class FirebaseTaskModel : ObservableObject{
                 let documentID = document.documentID
                 let title = document.get("title") as! String
                 let time = document.get("time") as! Int
+                let info = document.get("info") as! String
                 
-                print(documentID,title,time)
+               
                 
-                self.tasks.append(TaskDetails(title: title, time: Double(time)))
+                self.tasks.append(TaskDetails(title: title,info : info, time: Double(time)))
 //
             }
             

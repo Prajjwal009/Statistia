@@ -29,15 +29,36 @@ struct MainView : View {
     @State var color1 = Color("Color1")
     @State var showingSheetTask = false
     @State var index = 0
+
     var body: some View{
         ZStack {
             VStack{
                 HStack{
-                    Text("Hey, xyz")
-                        .fontWeight(.semibold)
-                        .font(.system(size: 35))
-                        .padding()
+                    VStack(alignment : .leading) {
+                        Text("Hey, xyz")
+                            .foregroundColor(.black)
+                            .fontWeight(.semibold)
+                            .font(.system(size: 35))
+                            .padding(.horizontal)
+                            .padding(.vertical,10)
+                        
+                        let taskCount : Int = firetaskmodel.tasks.count
+                        Text("\(taskCount) tasks remaining")
+                            .foregroundColor(color1)
+                            .padding(.horizontal)
+                            .font(.headline)
+                       
+                    }
                     Spacer()
+                    Button(action : {
+                        //
+                        
+                    }){
+                    Image(systemName: "chart.bar")
+                        .font(.system(size: 28))
+                        .foregroundColor(color1)
+                        .padding()
+                    }
                     
                     Button(action : {
                         showingSheetTask.toggle()
@@ -45,12 +66,13 @@ struct MainView : View {
                     }){
                     Image(systemName: "plus")
                         .font(.system(size: 28))
-                        .foregroundColor(.black)
+                        .foregroundColor(color1)
                         .padding()
                     }
                     .fullScreenCover(isPresented : $showingSheetTask,content : TaskSetter.init)
                 }
-                .padding(.bottom,18)
+                .padding(.bottom,10)
+                //today n tomorrow
                 
                 HStack{
                     Button(action : {
@@ -90,7 +112,7 @@ struct MainView : View {
                     .background(index == 1 ? color1 : .clear)
                     .clipShape(Capsule())
                 }
-                .background(Color.gray.opacity(0.1))
+                .background(Color.gray.opacity(0.25))
                 .clipShape(Capsule())
                 .padding(.bottom,10)
                 
@@ -102,10 +124,11 @@ struct MainView : View {
                     ForEach(firetaskmodel.tasks){task in
                         
                         VStack{
-                            TabCardView(taskName: task.title, taskInfo: "lol", taskTime: Int(task.time))
+                            TabCardView(taskName: task.title, taskInfo: task.info, taskTime: Int(task.time))
                         }
                         
                     }
+                    
                     
 //
                 }
@@ -126,22 +149,27 @@ struct TabCardView : View {
     @State var taskName : String = ""
     @State var taskInfo : String = ""
     @State var taskTime : Int = 0
+    @State var color1 = Color("Color1")
     var body: some View{
         HStack {
             VStack(alignment : .leading){
                 
                 
                 Text(taskName)
-                    .fontWeight(.regular)
+                    .fontWeight(.medium)
+                    .foregroundColor(color1)
                     .font(.system(size: 28))
+                    .padding(.top,15)
                     
                 
                 Text(taskInfo)
                     .fontWeight(.light)
+                    .padding(.top,1)
+                    
                 
             }
             .padding(.vertical)
-            .padding(.horizontal)
+            .padding(.horizontal,23)
             Spacer()
             
             

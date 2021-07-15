@@ -16,7 +16,7 @@ struct TaskSetter: View {
     @Environment(\.presentationMode) var presentationMode
     @State var showingFirstView = false
    
-    @State var currentTaskData = TaskDetails(title: "", time: 0)
+    @State var currentTaskData = TaskDetails(title: "",info: "", time: 0)
     @State var taskTime : Double = 0.0
     @State var taskText : String = ""
     @State var taskInfoText : String = ""
@@ -30,8 +30,9 @@ struct TaskSetter: View {
                     .padding(.horizontal)
                     .padding(.top,20)
                     .frame(height : 80)
+                    
                   
-                    .foregroundColor(.black)
+                    .foregroundColor(color1)
                     
                     .cornerRadius(10)
                     .font(.system(size: 35))
@@ -43,7 +44,7 @@ struct TaskSetter: View {
             Rectangle()
                 .frame(width : UIScreen.main.bounds.width - 10 ,height: 2)
             
-            TextField("about it",text : $taskInfoText)
+            TextField("about it",text : $currentTaskData.info)
                 .font(.system(size: 20))
                 
                 .padding(.horizontal)
@@ -77,7 +78,7 @@ struct TaskSetter: View {
                     Text("min")
                         .fontWeight(.light)
                 }
-                .padding(.top,15)
+                .padding(.top,10)
                 
             }
             .padding(.top,30)
@@ -114,32 +115,57 @@ struct TaskSetter: View {
                 
             
            
-              
+            
             Spacer()
-            Button(action : {
-                showingFirstView.toggle()
-                SaveTask()
-               
-                
-                
-                
-            }){
-                Text("Done")
-                    .foregroundColor(color1)
-                    .font(.system(size: 20))
+            ZStack{
+                Button(action : {
+                    if currentTaskData.title != ""{
+                        showingFirstView.toggle()
+                    SaveTask()
+                    }
+                        
+                   
                     
-                    .frame(width : 200,height: 50)
                     
-                    .background(Color.gray.opacity(0.2))
-                    .clipShape(Capsule())
+                    
+                }){
+                    Text("Done")
+                        .foregroundColor(.white)
+                        .fontWeight(.semibold)
+                        .font(.system(size: 20))
+                        
+                        .frame(width : 200,height: 50)
+                        
+                        .background(color1)
+                        .clipShape(Capsule())
+                       
+                }
+                .fullScreenCover(isPresented: $showingFirstView, content: ContentView.init)
+                
+                HStack {
+                    Spacer()
+                    Button(action : {
+                        showingFirstView.toggle()
+                        
+                    }){
+                        Image(systemName: "arrow.backward")
+                            .foregroundColor(color1)
+                            .font(.system(size: 23))
+                            .padding(.horizontal,25)
+                            .padding(.vertical)
+                            
+                    }
+                    .fullScreenCover(isPresented: $showingFirstView, content: ContentView.init)
+                }
             }
-            .fullScreenCover(isPresented: $showingFirstView, content: ContentView.init)
+            
+            
                 
               
         }
     }
     func SaveTask(){
-        db.collection("Tasks").addDocument(data: ["title" : currentTaskData.title,"time": Int(currentTaskData.time)])
+        db.collection("Tasks").addDocument(data: ["title" : currentTaskData.title,"time": Int(currentTaskData.time),"info" :currentTaskData.info])
 //     
        
         
