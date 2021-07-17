@@ -19,6 +19,8 @@
 		18BD03972699EF1C0083A98A /* StatistiaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BD03962699EF1C0083A98A /* StatistiaTests.swift */; };
 		18BD03A22699EF1C0083A98A /* StatistiaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BD03A12699EF1C0083A98A /* StatistiaUITests.swift */; };
 		18BD03B0269A385B0083A98A /* TaskSetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BD03AF269A385B0083A98A /* TaskSetter.swift */; };
+		18DF18CD26A0C9BC00EEF1D6 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF18CC26A0C9BC00EEF1D6 /* StatsView.swift */; };
+		18DF18CF26A0D88800EEF1D6 /* TaskDashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF18CE26A0D88800EEF1D6 /* TaskDashView.swift */; };
 		44F4840E967A4CF51E71584A /* Pods_Statistia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EFF81908C802938CC35051C /* Pods_Statistia.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +60,8 @@
 		18BD03A12699EF1C0083A98A /* StatistiaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatistiaUITests.swift; sourceTree = "<group>"; };
 		18BD03A32699EF1C0083A98A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18BD03AF269A385B0083A98A /* TaskSetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskSetter.swift; sourceTree = "<group>"; };
+		18DF18CC26A0C9BC00EEF1D6 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		18DF18CE26A0D88800EEF1D6 /* TaskDashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDashView.swift; sourceTree = "<group>"; };
 		2EFF81908C802938CC35051C /* Pods_Statistia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Statistia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		647C8A71FE465B341A253A09 /* Pods-Statistia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Statistia.release.xcconfig"; path = "Target Support Files/Pods-Statistia/Pods-Statistia.release.xcconfig"; sourceTree = "<group>"; };
 		E1DF4C2ECCD5ADC248213FC0 /* Pods-Statistia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Statistia.debug.xcconfig"; path = "Target Support Files/Pods-Statistia/Pods-Statistia.debug.xcconfig"; sourceTree = "<group>"; };
@@ -121,6 +125,8 @@
 				18BD03AF269A385B0083A98A /* TaskSetter.swift */,
 				18076F4C269DE9130036A48C /* TaskViewModel.swift */,
 				18BD038A2699EF1B0083A98A /* LaunchScreen.storyboard */,
+				18DF18CE26A0D88800EEF1D6 /* TaskDashView.swift */,
+				18DF18CC26A0C9BC00EEF1D6 /* StatsView.swift */,
 				18076F4E269EF6770036A48C /* FirebaseTaskViewModel.swift */,
 				18478CE0269DA29B0085506B /* GoogleService-Info.plist */,
 				18BD038D2699EF1B0083A98A /* Info.plist */,
@@ -350,8 +356,10 @@
 				18BD03802699EF160083A98A /* AppDelegate.swift in Sources */,
 				18076F4D269DE9130036A48C /* TaskViewModel.swift in Sources */,
 				18BD03822699EF160083A98A /* SceneDelegate.swift in Sources */,
+				18DF18CF26A0D88800EEF1D6 /* TaskDashView.swift in Sources */,
 				18BD03B0269A385B0083A98A /* TaskSetter.swift in Sources */,
 				18BD03842699EF160083A98A /* ContentView.swift in Sources */,
+				18DF18CD26A0C9BC00EEF1D6 /* StatsView.swift in Sources */,
 				18076F4F269EF6770036A48C /* FirebaseTaskViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

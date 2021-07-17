@@ -16,7 +16,7 @@ struct TaskSetter: View {
     @Environment(\.presentationMode) var presentationMode
     @State var showingFirstView = false
    
-    @State var currentTaskData = TaskDetails(title: "",info: "", time: 0)
+    @State var currentTaskData = TaskDetails(title: "",info: "", time: 0, docID: "")
     @State var taskTime : Double = 0.0
     @State var taskText : String = ""
     @State var taskInfoText : String = ""
@@ -73,8 +73,8 @@ struct TaskSetter: View {
                     
                 VStack(alignment : .center){
                     Text("\(Int(currentTaskData.time))")
-                        .font(.system(size: 30))
-                        .fontWeight(.bold)
+                        .font(.system(size: 35))
+                        .fontWeight(.light)
                     Text("min")
                         .fontWeight(.light)
                 }
@@ -119,7 +119,7 @@ struct TaskSetter: View {
             Spacer()
             ZStack{
                 Button(action : {
-                    if currentTaskData.title != ""{
+                    if currentTaskData.title != "" && currentTaskData.info != ""{
                         showingFirstView.toggle()
                     SaveTask()
                     }
@@ -148,7 +148,7 @@ struct TaskSetter: View {
                         showingFirstView.toggle()
                         
                     }){
-                        Image(systemName: "arrow.backward")
+                        Image(systemName: "chevron.backward")
                             .foregroundColor(color1)
                             .font(.system(size: 23))
                             .padding(.horizontal,25)

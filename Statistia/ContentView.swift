@@ -9,6 +9,7 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
 
 struct ContentView: View {
     var body: some View {
@@ -28,7 +29,14 @@ struct MainView : View {
     @StateObject  var firetaskmodel = FirebaseTaskModel()
     @State var color1 = Color("Color1")
     @State var showingSheetTask = false
-    @State var index = 0
+    @State var showStatsSheet = false
+    @State var buttonIndex = 0
+    @State var edit = false
+    @State var id1 = 0
+    @State var id2 = 0
+    var dbTasks = Firestore.firestore().collection("Tasks")
+    
+     
 
     var body: some View{
         ZStack {
@@ -51,6 +59,7 @@ struct MainView : View {
                     }
                     Spacer()
                     Button(action : {
+                        showStatsSheet.toggle()
                         //
                         
                     }){
@@ -59,6 +68,7 @@ struct MainView : View {
                         .foregroundColor(color1)
                         .padding()
                     }
+                    .fullScreenCover(isPresented: $showStatsSheet, content: StatsView.init)
                     
                     Button(action : {
                         showingSheetTask.toggle()
@@ -76,11 +86,11 @@ struct MainView : View {
                 
                 HStack{
                     Button(action : {
-                        self.index = 0
+                        self.buttonIndex = 0
                         
                     }){
                         Text("Today")
-                            .foregroundColor(index == 0 ? .white : .black)
+                            .foregroundColor(buttonIndex == 0 ? .white : .black)
                             .font(.system(size: 18))
                             .fontWeight(.semibold)
                             .padding(.vertical,10)
@@ -88,20 +98,20 @@ struct MainView : View {
                         
                         
                     }
-                    .background(index == 0 ? color1 : .clear)
+                    .background(buttonIndex == 0 ? color1 : .clear)
                     .clipShape(Capsule())
                     
                     
                     
                     
                     Button(action : {
-                        self.index = 1
+                        self.buttonIndex = 1
                         
                         
                         
                     }){
                         Text("Tomorrow")
-                            .foregroundColor(index == 1 ? .white : .black)
+                            .foregroundColor(buttonIndex == 1 ? .white : .black)
                             .font(.system(size: 18))
                             .fontWeight(.semibold)
                             .padding(.vertical,10)
@@ -109,7 +119,7 @@ struct MainView : View {
                         
                         
                     }
-                    .background(index == 1 ? color1 : .clear)
+                    .background(buttonIndex == 1 ? color1 : .clear)
                     .clipShape(Capsule())
                 }
                 .background(Color.gray.opacity(0.25))
@@ -121,27 +131,61 @@ struct MainView : View {
                     .frame(width : UIScreen.main.bounds.width - 50 ,height: 2)
                     
                 ScrollView{
-                    ForEach(firetaskmodel.tasks){task in
+                    
+                    ForEach(firetaskmodel.tasks, id: \.self){task in
                         
-                        VStack{
+                        
+                       
+                        LazyVStack{
+                            ZStack{
+                                
+                               
+                            
                             TabCardView(taskName: task.title, taskInfo: task.info, taskTime: Int(task.time))
+                                .animation(.easeIn)
+                                .onTapGesture {
+                                    let Id = task.docID
+                                    let docD = dbTasks.document(Id)
+                                    docD.delete()
+                                    renewData()
+                                    self.firetaskmodel.fetchData()
+                                    
+                                }
+                               
+                               
+                             
+                            }
+                            
+                            
                         }
+                        
                         
                     }
                     
                     
-//
+                    
+                    
                 }
+                
                 .onAppear(){
+                
                     self.firetaskmodel.fetchData()
+                        
+                    
+                }
+                
                
-            }
-        }.environmentObject(firetaskmodel)
-        
+            }.environmentObject(firetaskmodel)
+            
         }
         
        
         
+   //renews the Tasks
+        
+    }
+    func renewData(){
+        firetaskmodel.tasks.removeAll()
     }
 }
 
@@ -149,42 +193,60 @@ struct TabCardView : View {
     @State var taskName : String = ""
     @State var taskInfo : String = ""
     @State var taskTime : Int = 0
-    @State var color1 = Color("Color1")
+    
+    
+    var color1 = Color("Color1")
     var body: some View{
-        HStack {
-            VStack(alignment : .leading){
-                
-                
-                Text(taskName)
-                    .fontWeight(.medium)
-                    .foregroundColor(color1)
-                    .font(.system(size: 28))
-                    .padding(.top,15)
+        ZStack {
+            
+            
+            HStack {
+                VStack(alignment : .leading){
                     
-                
-                Text(taskInfo)
-                    .fontWeight(.light)
-                    .padding(.top,1)
                     
+                    Text(taskName)
+                        .fontWeight(.medium)
+                        .foregroundColor(color1)
+                        .font(.system(size: 28))
+                        .padding(.top,15)
+                        
+                    
+                    Text(taskInfo)
+                        .fontWeight(.light)
+                        .padding(.top,1)
+                        
+                    
+                }
+                .padding(.vertical)
+                .padding(.horizontal,23)
+                Spacer()
+                
+                
+                VStack {
+                   
+                    Text("\(taskTime)")
+                        .font(.system(size: 31))
+                        .fontWeight(.light)
+                    
+                        .padding(.horizontal,30)
+                }
                 
             }
-            .padding(.vertical)
-            .padding(.horizontal,23)
-            Spacer()
+            
+           
             
             
-            Text("\(taskTime)")
-                .font(.system(size: 28))
-                .fontWeight(.light)
+            .frame(height : 120)
             
-                .padding(.horizontal,30)
+            .background(Color.gray.opacity(0.2))
+            .cornerRadius(15)
+            .padding(.horizontal)
+            .padding(.top)
+            
+           
+            
         }
-        .frame(height : 120)
         
-        .background(Color.gray.opacity(0.2))
-        .cornerRadius(15)
-        .padding(.horizontal)
-        .padding(.top)
         
         
        
