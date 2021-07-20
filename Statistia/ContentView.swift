@@ -27,13 +27,16 @@ struct ContentView_Previews: PreviewProvider {
 }
 struct MainView : View {
     @StateObject  var firetaskmodel = FirebaseTaskModel()
+    
+    
     @State var color1 = Color("Color1")
     @State var showingSheetTask = false
     @State var showStatsSheet = false
     @State var buttonIndex = 0
-    @State var edit = false
-    @State var id1 = 0
-    @State var id2 = 0
+    @State var edit1 = false
+    
+   
+   
     var dbTasks = Firestore.firestore().collection("Tasks")
     
      
@@ -138,17 +141,24 @@ struct MainView : View {
                        
                         LazyVStack{
                             ZStack{
-                                
                                
-                            
+                        
                             TabCardView(taskName: task.title, taskInfo: task.info, taskTime: Int(task.time))
-                                .animation(.easeIn)
-                                .onTapGesture {
-                                    let Id = task.docID
-                                    let docD = dbTasks.document(Id)
-                                    docD.delete()
-                                    renewData()
-                                    self.firetaskmodel.fetchData()
+                                .animation(
+                                    Animation.easeOut(duration: 0.2)
+                                )
+                               
+                                
+                                .onTapGesture() {
+                                    
+                           
+//
+//                                    let Id = task.docID
+//                                    let docD = dbTasks.document(Id)
+//                                    firetaskmodel.x = Id
+//                                    docD.delete()
+//                                    renewData()
+//                                    self.firetaskmodel.fetchData()
                                     
                                 }
                                
@@ -167,9 +177,11 @@ struct MainView : View {
                     
                 }
                 
+                
                 .onAppear(){
                 
                     self.firetaskmodel.fetchData()
+                    
                         
                     
                 }
@@ -179,25 +191,37 @@ struct MainView : View {
             
         }
         
+        
        
         
    //renews the Tasks
         
     }
+    
     func renewData(){
         firetaskmodel.tasks.removeAll()
     }
+    
+   
 }
 
 struct TabCardView : View {
+    @EnvironmentObject var firemodel : FirebaseTaskModel
     @State var taskName : String = ""
     @State var taskInfo : String = ""
     @State var taskTime : Int = 0
+    @State var edit2 = false
+    
+    @State var editButton = false
+    
     
     
     var color1 = Color("Color1")
     var body: some View{
         ZStack {
+            
+           
+        
             
             
             HStack {
@@ -228,25 +252,38 @@ struct TabCardView : View {
                         .font(.system(size: 31))
                         .fontWeight(.light)
                     
-                        .padding(.horizontal,30)
+                        .padding(.horizontal,15)
+                }
+                Button(action : {
+                    print(firemodel.x)
+                   
+                    
+                    
+                }
+                ){
+                    Image(systemName: "trash")
+                        .foregroundColor(.black)
+                        .padding(.trailing)
+                    
                 }
                 
+                
+                
             }
-            
            
-            
-            
-            .frame(height : 120)
+            .frame(width : 380 ,height : 120)
             
             .background(Color.gray.opacity(0.2))
             .cornerRadius(15)
             .padding(.horizontal)
             .padding(.top)
             
+          
+            
+            
            
             
         }
-        
         
         
        
@@ -254,3 +291,4 @@ struct TabCardView : View {
         
     }
 }
+

@@ -8,13 +8,20 @@
 import SwiftUI
 
 import FirebaseFirestore
+struct TaskTapped : Identifiable{
+    var id = UUID().uuidString
+    
+    var title : String
+    var docID : String
+}
 
-struct TaskDetails : Identifiable ,Hashable{
+struct TaskDetails : Identifiable, Hashable {
     var id  = UUID().uuidString
     var title : String
     var info : String
     var time : Double
     var docID : String
+    
     
     
     
@@ -24,6 +31,8 @@ struct TaskDetails : Identifiable ,Hashable{
 class FirebaseTaskModel : ObservableObject{
     @Published var tasks : [TaskDetails] = [
     ]
+    @Published var x : [TaskTapped] = []
+    
     
     private var db = Firestore.firestore().collection("Tasks")
     
@@ -43,38 +52,25 @@ class FirebaseTaskModel : ObservableObject{
                 let time = document.get("time") as! Int
                 let info = document.get("info") as! String
                 
-               
+                
                 
                 self.tasks.append(TaskDetails(title: title,info : info, time: Double(time), docID: documentID))
-//
+                //
             }
-            
-            
-            
-            
-            
+                
+                
+                
+            }
         }
-    }
-            
-    
         
-//        db.collection("Tasks").addSnapshotListener {(querySnapshot, error ) in
-//            guard let documents = querySnapshot?.documents else{
-//                print(error!)
-//                return
-//            }
-//            let title =  documents.map{ $0["title"]!}
-//            let time =  documents.map{ $0["time"]!}
-//            for i in 0..<title.count{
-//                self.tasks.append(TaskDetails(title: title[i] as! String, time: time[i] as! Double))
-//            }
-//
-//        }
-       
-
-        }
+        
+        
+        //     
+        
+    }
     
     
     
-
+    
+    
 }

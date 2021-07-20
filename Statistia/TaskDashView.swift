@@ -6,11 +6,18 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
+import Combine
 
 struct TaskDashView: View {
+    var db = Firestore.firestore().collection("Tasks")
+    
+    @StateObject var firetaskmodel = FirebaseTaskModel()
+   
+    
     @State var color1 = Color("Color1")
     var body: some View {
-        VStack(spacing : 10){
+        HStack(){
             Button(action : {
                 
             }){
@@ -20,8 +27,10 @@ struct TaskDashView: View {
                 .fontWeight(.semibold)
                
             }
+            .padding()
             Rectangle()
-                .frame(width : 200 ,height : 1)
+                .frame(width : 2 ,height : 50)
+          
                 
             
             Button(action : {
@@ -32,9 +41,16 @@ struct TaskDashView: View {
                 .font(.system(size: 30))
                 .fontWeight(.semibold)
             }
+            .padding()
             Rectangle()
-                .frame(width : 200 ,height : 1)
+                .frame(width : 2 ,height : 50)
+            
             Button(action : {
+                print(firetaskmodel.x)
+               
+               
+                
+               
                 
             }){
             Text("delete")
@@ -43,13 +59,26 @@ struct TaskDashView: View {
                 .fontWeight(.semibold)
             }
            
+            .padding()
+           
             
             
         }
-        .padding()
+        .environmentObject(firetaskmodel)
+        .frame(width : 380 ,height : 120)
+        
         .background(Color.gray.opacity(0.2))
-        .cornerRadius(20)
+        .cornerRadius(15)
+        .padding(.horizontal)
+        .padding(.top)
+        
+        
+       
+        
     }
+  
+   
+  
     
     struct TaskDashView_Previews: PreviewProvider {
         static var previews: some View {
@@ -57,3 +86,4 @@ struct TaskDashView: View {
         }
     }
 }
+
