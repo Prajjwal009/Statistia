@@ -60,6 +60,7 @@ struct MainView : View {
                             .font(.headline)
                        
                     }
+                    
                     Spacer()
                     Button(action : {
                         showStatsSheet.toggle()
@@ -133,58 +134,37 @@ struct MainView : View {
                     .foregroundColor(color1)
                     .frame(width : UIScreen.main.bounds.width - 50 ,height: 2)
                     
-                ScrollView{
+              
                     
-                    ForEach(firetaskmodel.tasks, id: \.self){task in
-                        
-                        
-                       
-                        LazyVStack{
-                            ZStack{
-                               
-                        
-                            TabCardView(taskName: task.title, taskInfo: task.info, taskTime: Int(task.time))
-                                .animation(
-                                    Animation.easeOut(duration: 0.2)
-                                )
-                               
-                                
-                                .onTapGesture() {
-                                    
-                           
-//
-//                                    let Id = task.docID
-//                                    let docD = dbTasks.document(Id)
-//                                    firetaskmodel.x = Id
-//                                    docD.delete()
-//                                    renewData()
-//                                    self.firetaskmodel.fetchData()
+                
+                    ScrollView(.vertical,showsIndicators : false){
+                        VStack(spacing : 15){
+                            ForEach(self.firetaskmodel.tasks){ i in
+                                VStack{
+                                    TaskCellView(data: i)
                                     
                                 }
-                               
-                               
-                             
+                                
                             }
-                            
-                            
                         }
+                    }
+                    .onAppear(){
                         
+
+                        self.firetaskmodel.fetchData()
                         
+
+
+
                     }
                     
+                
+                   
                     
-                    
-                    
-                }
                 
                 
-                .onAppear(){
                 
-                    self.firetaskmodel.fetchData()
-                    
-                        
-                    
-                }
+               
                 
                
             }.environmentObject(firetaskmodel)
@@ -196,17 +176,17 @@ struct MainView : View {
         
    //renews the Tasks
         
-    }
     
-    func renewData(){
-        firetaskmodel.tasks.removeAll()
+    
+    
+    
     }
     
    
 }
 
 struct TabCardView : View {
-    @EnvironmentObject var firemodel : FirebaseTaskModel
+   
     @State var taskName : String = ""
     @State var taskInfo : String = ""
     @State var taskTime : Int = 0
@@ -219,6 +199,7 @@ struct TabCardView : View {
     var color1 = Color("Color1")
     var body: some View{
         ZStack {
+            
             
            
         
@@ -255,7 +236,7 @@ struct TabCardView : View {
                         .padding(.horizontal,15)
                 }
                 Button(action : {
-                    print(firemodel.x)
+                   
                    
                     
                     
@@ -288,6 +269,122 @@ struct TabCardView : View {
         
        
         
+        
+    }
+}
+
+struct TaskCellView : View {
+    var data  : TaskDetails
+    
+    var color1 = Color("Color1")
+    @State var EditButton = false
+    @State var show = false
+    // show is for moving to edit screen
+    var body: some View{
+        ZStack {
+            TaskDashView(data: data)
+                .opacity(EditButton == false ? 0 : 1)
+                            
+           
+            HStack {
+                VStack(alignment : .leading){
+                    
+                    
+                    Text(data.title)
+                        .fontWeight(.medium)
+                        .foregroundColor(color1)
+                        .font(.system(size: 28))
+                        .padding(.top,15)
+                        
+                    
+                    Text(data.info)
+                        .fontWeight(.light)
+                        .padding(.top,1)
+                        
+                    
+                }
+                .padding(.vertical)
+                .padding(.horizontal,23)
+                Spacer()
+                
+                
+                VStack {
+                   
+                    Text("\(Int(data.time))")
+                        .font(.system(size: 31))
+                        .fontWeight(.light)
+                    
+                        .padding(.horizontal,15)
+                }
+                Button(action : {
+                    show.toggle()
+                   
+                   
+                    
+                    
+                }
+                ){
+                    Image(systemName: "trash")
+                        .foregroundColor(.black)
+                        .padding(.trailing)
+                    
+                }
+                .fullScreenCover(isPresented: $show){
+                    EditTaskView(data: self.data)
+                }
+                
+                
+                
+                
+            }
+           
+           
+            .frame(width : 380 ,height : 120)
+            
+            .background(Color.gray.opacity(0.2))
+            .cornerRadius(15)
+            .padding(.horizontal)
+            .padding(.top)
+            .opacity(EditButton == false ? 1 : 0)
+            .onLongPressGesture {
+                EditButton.toggle()
+            }
+            
+          
+            
+            
+           
+            
+        }
+       
+    }
+}
+
+// opens new sheet(Edit task Sheet) and successfully delete the item in firestore
+struct EditTaskView : View {
+    var dbTasks = Firestore.firestore().collection("Tasks")
+    var data : TaskDetails
+    @Environment(\.presentationMode) var prentationMode
+    @State var newShow = false
+    //for going back to the main view
+    var body: some View{
+        VStack{
+            Text(data.title)
+            Text(data.info)
+            Button(action : {
+                let Id = data.docID
+                dbTasks.document(Id).delete()
+                newShow.toggle()
+                
+                
+            }){
+                Image(systemName: "trash")
+            }
+            .fullScreenCover(isPresented: $newShow){
+                MainView()
+            }
+        }
+    
         
     }
 }

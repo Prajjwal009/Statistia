@@ -11,8 +11,10 @@ import Combine
 
 struct TaskDashView: View {
     var db = Firestore.firestore().collection("Tasks")
-    
     @StateObject var firetaskmodel = FirebaseTaskModel()
+    
+    
+    var data : TaskDetails
    
     
     @State var color1 = Color("Color1")
@@ -46,25 +48,31 @@ struct TaskDashView: View {
                 .frame(width : 2 ,height : 50)
             
             Button(action : {
-                print(firetaskmodel.x)
+                
+//                print("lol")
+                let Id = data.docID
+                db.document(Id).delete()
+                firetaskmodel.tasks.removeAll()
+                firetaskmodel.deleteItem.toggle()
                
                
                 
                
                 
             }){
-            Text("delete")
-                .foregroundColor(color1)
-                .font(.system(size: 30))
-                .fontWeight(.semibold)
+                Image(systemName: "trash")
+                    .foregroundColor(color1)
+                    .font(.system(size: 30))
+                    
             }
-           
+            .animation(.easeInOut)
+            
             .padding()
            
             
             
         }
-        .environmentObject(firetaskmodel)
+        
         .frame(width : 380 ,height : 120)
         
         .background(Color.gray.opacity(0.2))
@@ -82,7 +90,7 @@ struct TaskDashView: View {
     
     struct TaskDashView_Previews: PreviewProvider {
         static var previews: some View {
-            TaskDashView()
+            ContentView()
         }
     }
 }

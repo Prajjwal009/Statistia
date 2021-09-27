@@ -13,6 +13,7 @@ struct TaskTapped : Identifiable{
     
     var title : String
     var docID : String
+    var isitemDeleted : Bool
 }
 
 struct TaskDetails : Identifiable, Hashable {
@@ -21,6 +22,7 @@ struct TaskDetails : Identifiable, Hashable {
     var info : String
     var time : Double
     var docID : String
+   
     
     
     
@@ -32,6 +34,7 @@ class FirebaseTaskModel : ObservableObject{
     @Published var tasks : [TaskDetails] = [
     ]
     @Published var x : [TaskTapped] = []
+    @Published var deleteItem = false
     
     
     private var db = Firestore.firestore().collection("Tasks")
