@@ -42,6 +42,7 @@ struct TaskSetter: View {
                     
             }
             Rectangle()
+                .foregroundColor(color1)
                 .frame(width : UIScreen.main.bounds.width - 10 ,height: 2)
             
             TextField("about it",text : $currentTaskData.info)
@@ -67,7 +68,7 @@ struct TaskSetter: View {
             
             ZStack{
                 
-                Circle().stroke(Color.purple,lineWidth: 2)
+                Circle().stroke(Color("Color1"),lineWidth: 2)
                     .frame(width : 150, height :150)
                     .foregroundColor(color1)
                     
@@ -130,7 +131,7 @@ struct TaskSetter: View {
                     
                 }){
                     Text("Done")
-                        .foregroundColor(.white)
+                        .foregroundColor(.black)
                         .fontWeight(.semibold)
                         .font(.system(size: 20))
                         

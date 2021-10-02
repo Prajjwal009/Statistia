@@ -10,12 +10,13 @@ import SwiftUI
 struct StatsView: View {
     @State var color1 = Color("Color1")
     @State var showingFirstView = false
+    @State var backcolorForStats = LinearGradient(gradient: Gradient(colors: [Color.green, Color.black]), startPoint: .topTrailing, endPoint: .center)
     var body: some View {
         ZStack{
             VStack{
                 HStack {
                     Text("Stats")
-                        .foregroundColor(.black)
+                        .foregroundColor(.white)
                         .fontWeight(.semibold)
                         .font(.system(size: 35))
                         .padding()
@@ -26,7 +27,7 @@ struct StatsView: View {
                     }){
                         Image(systemName: "chevron.backward")
                             
-                            .foregroundColor(color1)
+                            .foregroundColor(.white)
                             .font(.system(size: 23))
                             .padding()
                     }
@@ -34,7 +35,7 @@ struct StatsView: View {
                 }
                 Spacer()
             }
-        }
+        }.background(backcolorForStats.edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/))
     }
 }
 

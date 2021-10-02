@@ -27,6 +27,7 @@ struct ContentView_Previews: PreviewProvider {
 }
 struct MainView : View {
     @StateObject  var firetaskmodel = FirebaseTaskModel()
+    @State var backcolor = LinearGradient(gradient: Gradient(colors: [Color.green, Color.black]), startPoint: .topTrailing, endPoint: .center)
     
     
     @State var color1 = Color("Color1")
@@ -46,15 +47,18 @@ struct MainView : View {
             VStack{
                 HStack{
                     VStack(alignment : .leading) {
-                        Text("Hey, xyz")
-                            .foregroundColor(.black)
-                            .fontWeight(.semibold)
+                        Text("Hey PJ")
+                            .font(.custom("Futura", size: 35))
+                            .foregroundColor(.white)
+                            .fontWeight(.light)
                             .font(.system(size: 35))
                             .padding(.horizontal)
                             .padding(.vertical,10)
                         
                         let taskCount : Int = firetaskmodel.tasks.count
                         Text("\(taskCount) tasks remaining")
+                            .font(.custom("Futura", size: 18))
+                            .fontWeight(.bold)
                             .foregroundColor(color1)
                             .padding(.horizontal)
                             .font(.headline)
@@ -69,7 +73,7 @@ struct MainView : View {
                     }){
                     Image(systemName: "chart.bar")
                         .font(.system(size: 28))
-                        .foregroundColor(color1)
+                        .foregroundColor(.white)
                         .padding()
                     }
                     .fullScreenCover(isPresented: $showStatsSheet, content: StatsView.init)
@@ -80,7 +84,7 @@ struct MainView : View {
                     }){
                     Image(systemName: "plus")
                         .font(.system(size: 28))
-                        .foregroundColor(color1)
+                        .foregroundColor(.white)
                         .padding()
                     }
                     .fullScreenCover(isPresented : $showingSheetTask,content : TaskSetter.init)
@@ -94,7 +98,7 @@ struct MainView : View {
                         
                     }){
                         Text("Today")
-                            .foregroundColor(buttonIndex == 0 ? .white : .black)
+                            .foregroundColor(buttonIndex == 0 ? .black : .white)
                             .font(.system(size: 18))
                             .fontWeight(.semibold)
                             .padding(.vertical,10)
@@ -115,7 +119,7 @@ struct MainView : View {
                         
                     }){
                         Text("Tomorrow")
-                            .foregroundColor(buttonIndex == 1 ? .white : .black)
+                            .foregroundColor(buttonIndex == 1 ? .black : .white)
                             .font(.system(size: 18))
                             .fontWeight(.semibold)
                             .padding(.vertical,10)
@@ -170,6 +174,7 @@ struct MainView : View {
             }.environmentObject(firetaskmodel)
             
         }
+        .background(backcolor.edgesIgnoringSafeArea(.all))
         
         
        
@@ -210,13 +215,14 @@ struct TabCardView : View {
                     
                     
                     Text(taskName)
-                        .fontWeight(.medium)
+                        .fontWeight(.semibold)
                         .foregroundColor(color1)
                         .font(.system(size: 28))
                         .padding(.top,15)
                         
                     
                     Text(taskInfo)
+                        
                         .fontWeight(.light)
                         .padding(.top,1)
                         
@@ -230,6 +236,7 @@ struct TabCardView : View {
                 VStack {
                    
                     Text("\(taskTime)")
+                       
                         .font(.system(size: 31))
                         .fontWeight(.light)
                     
@@ -291,6 +298,7 @@ struct TaskCellView : View {
                     
                     
                     Text(data.title)
+                        
                         .fontWeight(.medium)
                         .foregroundColor(color1)
                         .font(.system(size: 28))
@@ -298,6 +306,8 @@ struct TaskCellView : View {
                         
                     
                     Text(data.info)
+                        .font(.custom("Futura", size: 18))
+                        .foregroundColor(.white)
                         .fontWeight(.light)
                         .padding(.top,1)
                         
@@ -311,6 +321,7 @@ struct TaskCellView : View {
                 VStack {
                    
                     Text("\(Int(data.time))")
+                        .foregroundColor(.white)
                         .font(.system(size: 31))
                         .fontWeight(.light)
                     
@@ -324,8 +335,8 @@ struct TaskCellView : View {
                     
                 }
                 ){
-                    Image(systemName: "trash")
-                        .foregroundColor(.black)
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(.white)
                         .padding(.trailing)
                     
                 }
@@ -361,31 +372,37 @@ struct TaskCellView : View {
 }
 
 // opens new sheet(Edit task Sheet) and successfully delete the item in firestore
-struct EditTaskView : View {
-    var dbTasks = Firestore.firestore().collection("Tasks")
-    var data : TaskDetails
-    @Environment(\.presentationMode) var prentationMode
-    @State var newShow = false
-    //for going back to the main view
-    var body: some View{
-        VStack{
-            Text(data.title)
-            Text(data.info)
-            Button(action : {
-                let Id = data.docID
-                dbTasks.document(Id).delete()
-                newShow.toggle()
-                
-                
-            }){
-                Image(systemName: "trash")
-            }
-            .fullScreenCover(isPresented: $newShow){
-                MainView()
-            }
-        }
-    
-        
-    }
-}
-
+//struct EditTaskView : View {
+//    var dbTasks = Firestore.firestore().collection("Tasks")
+//    var data : TaskDetails
+//    @Environment(\.presentationMode) var prentationMode
+//    @State var newShow = false
+//    //for going back to the main view
+//    var body: some View{
+//        VStack{
+//            Text(data.title)
+//                .foregroundColor(.black)
+//                .font(.system(size: 25))
+//                .fontWeight(.semibold)
+//                .padding()
+//            Text(data.info)
+//            Button(action : {
+//                let Id = data.docID
+//                dbTasks.document(Id).delete()
+//                newShow.toggle()
+//
+//
+//            }){
+//                Image(systemName: "trash")
+//            }
+//            .fullScreenCover(isPresented: $newShow){
+//                MainView()
+//            }
+//
+//            Spacer()
+//        }
+//
+//
+//    }
+//}
+//
